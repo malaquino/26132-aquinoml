@@ -1,3 +1,5 @@
+const BASE_URL = 'https://fakestoreapi.com/products';
+
 function ProcesarComando(){
     var parametros = process.argv.slice(2);
     if(parametros.length == 0){
@@ -9,9 +11,14 @@ function ProcesarComando(){
         case "GET":
             if (parametros.length > 1){
                 if (parametros[1].toLowerCase().trim() == "products"){
-                    //obtiene todos los productos
+                    ObtenerProductos();
                 } else if (parametros[1].toLowerCase().trim().startsWith("products/")){
-                    //obtiene el productId indicado luego de la barra, un numero
+                    const idProducto = parametros[1].split("/")[1].trim();
+                    if (idProducto.length == 0 || isNaN(idProducto)){
+                        console.log("El <productId> debe ser un número válido después de products/");
+                    } else {
+                        ObtenerProducto(idProducto);
+                    }
                 }
                 else {
                     console.log("El segundo parámetro del comando GET debe ser: products ó products/<productId>");
@@ -51,3 +58,38 @@ function ProcesarComando(){
 }
 
 ProcesarComando();
+
+async function ObtenerProductos(){
+    try {
+        const response = await fetch(BASE_URL);
+    
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+        }
+    
+        const data = await response.json();
+        console.log("Obteniendo Todos los Productos:")
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Falló la solicitud:', error.message);
+    }
+}
+
+async function ObtenerProducto(idProducto){
+    try {
+        const response = await fetch(`${BASE_URL}/${idProducto}`);
+    
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+        }
+    
+        const data = await response.json();
+        console.log(`Obteniendo el Producto con Id ${idProducto}:`)
+        console.log(data);
+        return data;
+    
+    } catch (error) {
+        console.error('Falló la solicitud:', error.message);
+    }
+}
