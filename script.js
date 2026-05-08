@@ -46,12 +46,11 @@ function ProcesarComando(){
         case "DELETE":
             if (parametros.length > 1){
                 if (parametros[1].toLowerCase().trim().startsWith("products/")){
-                    //obtiene el productId indicado luego de la barra, un numero
                     const idProducto = parametros[1].split("/")[1].trim();
                     if (idProducto.length == 0 || isNaN(idProducto)){
                         console.log("El <productId> debe ser un número válido después de products/");
                     } else {
-                        
+                        EliminarProducto(idProducto);
                     }
                 } else {
                     console.log("El segundo parámetro del comando DELETE debe ser: products/<productId>");
@@ -116,6 +115,25 @@ async function AgregarProducto(titulo, precio, categoria){
                     category: categoria
                 }
             )
+        })
+    
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+        }
+    
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Falló la solicitud:', error.message);
+    }
+}
+
+async function EliminarProducto(idProducto){
+    try {
+        console.log(`Eliminando el Producto con Id ${idProducto}:`)
+        const response = await fetch(`${BASE_URL}/${idProducto}`,{
+            method: "DELETE"
         })
     
         if (!response.ok) {
