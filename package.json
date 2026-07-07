@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node script.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/malaquino/26132-aquinoml/issues"
   },
-  "homepage": "https://github.com/malaquino/26132-aquinoml#readme"
+  "homepage": "https://github.com/malaquino/26132-aquinoml#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.15.0"
+  }
 }
