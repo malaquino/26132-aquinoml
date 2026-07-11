@@ -7,7 +7,7 @@ import { db } from "../data/firebase.data.js";
  * @returns {Promise<Array<Object>>} Lista de documentos con id y datos.
  */
 export async function readDocuments(collectionName) {
-  console.log("Reading productos");
+  console.log(`Reading '${collectionName}'`);
   const colRef = collection(db, collectionName);
   const snapshot = await getDocs(colRef);
   return snapshot.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() }));
@@ -41,17 +41,8 @@ export async function createDocument(collectionName, data) {
   console.log("Data a guardar:");
   console.dir(data, { depth: null });
   const colRef = collection(db, collectionName);
-  console.log("colección: ", colRef)
+  console.log(`Coleccion: '${colRef}'`)
   const docRef = await addDoc(colRef, data);
-  //const colRef = collection(db, collectionName);
-  /*console.log("Coleccion obtenida")
-  console.log(typeof data)
-  const docRef = await addDoc(colRef, {
-    nombre: data.nombre,
-    categoria: data.categoria,
-    precio: data.precio
-  });
-  console.log("Producto creado")*/
   return docRef.id;
 }
 
@@ -87,20 +78,7 @@ export async function updateDocument(collectionName, id, data) {
  * @returns {Promise<void>}
  */
 export async function deleteDocument(collectionName, id) {
-  console.log("Capa de modelos")
   const docRef = doc(db, collectionName, id);
   return await deleteDoc(docRef);
 }
 
-/**
- * Ejemplo de consulta simple con filtros.
- * Busca documentos donde el campo status sea "activo".
- * @param {string} collectionName Nombre de la colección en Firestore.
- * @returns {Promise<Array<Object>>}
- */
-export async function queryDocumentsByStatus(collectionName) {
-  const colRef = collection(db, collectionName);
-  const q = query(colRef, where("status", "==", "activo"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() }));
-}

@@ -10,7 +10,6 @@ const firebaseConfig = {
   appId: process.env.appId
 };
 
-
 export const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);

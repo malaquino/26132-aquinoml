@@ -4,13 +4,12 @@ export const getAllProducts = async (req, res) => {
   try {
     const products = await getProductsService();
 
-    // Si no se encuentran productos, devolvemos un error 404.
     if (products.length === 0) {
       return res.status(404).json({ error: 'No se encontraron productos' });
     }
     return res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: 'Error interno del servidor al obtener productos' });
   }
 };
 
@@ -24,10 +23,10 @@ export const getProductById = async (req, res) => {
     if (product) {
       res.status(200).json(product);
     } else {
-      res.status(404).json({ message: 'Producto no encontrado' });
+      res.status(404).json({ message: `Producto '${id}' no encontrado` });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener el producto' });
+    res.status(500).json({ message: `Error interno al obtener el producto '${id}'` });
   }
 };
 
@@ -35,7 +34,7 @@ export const createProduct = async (req, res) => {
   const producto = req.body.producto
   console.log(producto)
   if (!producto) {
-    return res.status(400).json({ message: 'Información del producto es requerida' });
+    return res.status(400).json({ message: 'No se encontro informacion del producto, es requerida' });
   }
   try {
     const id = await createProductService(producto)
@@ -43,7 +42,7 @@ export const createProduct = async (req, res) => {
     res.status(200).json(producto);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Error al obtener el producto' });
+    res.status(500).json({ message: 'Error interno al crear el producto' });
   }
 }
 
@@ -54,13 +53,16 @@ export const updateProduct = async (req, res) => {
   if (!id) {
     return res.status(400).json({ message: 'ID del producto es requerido' });
   }
+  if (!data) {
+    return res.status(400).json({ message: 'No se encontro informacion del producto, es requerida' });
+  }
 
   try {
     await updateProductService(id, data);
-    res.status(200).json({ message: 'Producto actualizado correctamente' });
+    res.status(200).json({ message: `Producto '${id}' actualizado correctamente` });
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Error al actualizar el producto' });
+    res.status(500).json({ message: `Error interno al actualizar el producto '${id}'` });
   }
 }
 
@@ -72,8 +74,8 @@ export const deleteProduct = async (req, res) => {
       return res.status(400).json({ message: 'ID del producto es requerido' });
     }
     await deleteProductService(id);
-    res.status(200).json({ message: "Producto eliminado" });
+    res.status(200).json({ message: `Producto '${id}' eliminado` });
   } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar el producto' });
+    res.status(500).json({ message: `Error interno al eliminar el producto '${id}'` });
   }
 };
