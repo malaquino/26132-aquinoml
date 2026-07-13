@@ -2,6 +2,25 @@
 
 Esta API permite gestionar Productos. Aqui se muestra en detalle las maneras de poder realizar las diferentes operaciones.
 
+## Login
+
+Para obtener el token (que se utiliza para ciertas operaciones), se debe ejecutar el request a <localhost:3000/auth/login> con el method 'POST'
+
+Si se ejecuta desde Postman ir a la solapa 'Body', seleccionar en los combos 'raw' y 'JSON', y luego debajo colocar un texto con formato JSON como el siguiente ejemplo (con los datos correctos):
+
+```json
+{
+    "email": "xxx@xxx.com",
+    "password": "xxxx"
+}
+```
+
+Se va a obtener algo similar a esto:
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3ODM5MTI0NDYsImV4cCI6MTc4MzkxNjA0Nn0.x2i1kbDj7vkDENsu0KBojYtYfXxZC-w7XfPw7T0wljM"
+}
+```
 
 ## Obtener Listado de Productos
 
@@ -16,7 +35,7 @@ Ejecutar el request
 <localhost:3000/api/products/:id>
 con el method 'GET'
 
-Si se ejecuta desde Postman, se debe colocar en la solapa 'Params' dentro de la seccion 'Path Variables' colocar:
+Si se ejecuta desde Postman, se debe ir a la solapa 'Params' y dentro de la seccion 'Path Variables' colocar:
 
 Key: 'id'\
 Value: el valor de Id que se quiere buscar
@@ -41,6 +60,8 @@ Si se ejecuta desde Postman ir a la solapa 'Body', seleccionar en los combos 'ra
 }
 ```
 
+Ir a la solapa Authorization, se debe seleccionar en Auth Type la opcion 'Bearer Token' y en el campo de Texto que se habilita a la derecha pegar el token que devuelve el [Request de Login](#login) (sin las comillas, solo el valor) 
+
 ## Actualizar un Producto
 
 Ejecutar el request
@@ -62,6 +83,8 @@ Luego se debe ir a la solapa 'Body', seleccionar en los combos 'raw' y 'JSON', y
 }
 ```
 
+Ir a la solapa Authorization, se debe seleccionar en Auth Type la opcion 'Bearer Token' y en el campo de Texto que se habilita a la derecha pegar el token que devuelve el [Request de Login](#login) (sin las comillas, solo el valor) 
+
 ## Eliminar un Producto
 
 Ejecutar el request 
@@ -72,3 +95,5 @@ Si se ejecuta desde Postman, se debe ir a la solapa 'Params' y dentro de la secc
 
 Key: 'id'\
 Value: el valor de Id que se quiere eliminar
+
+Ir a la solapa Authorization, se debe seleccionar en Auth Type la opcion 'Bearer Token' y en el campo de Texto que se habilita a la derecha pegar el token que devuelve el [Request de Login](#login) (sin las comillas, solo el valor) 
