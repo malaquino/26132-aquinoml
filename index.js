@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from "cors";
 import "dotenv/config";
+import loginRouter from "./src/routes/auth.routes.js"
 import productsRouter from './src/routes/products.routes.js';
 
 const app = express();
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
   next();
 })
 
+app.use("/auth", loginRouter)
 app.use("/api", productsRouter);
 
 app.use(function (req, res, next) {
