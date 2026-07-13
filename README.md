@@ -2,6 +2,9 @@
 
 Esta API permite gestionar Productos. Aqui se muestra en detalle las maneras de poder realizar las diferentes operaciones.
 
+Tener en cuenta que si el codigo se ejecuta en la pc localmente (ejecutando 'npm start' desde la linea de comando), el host es <localhost:3000>.
+Si se va a utilizar la API publicada en Vercel, se debe tomar como host  <https://26132-aquinoml.vercel.app>.
+
 ## Login
 
 Para obtener el token (que se utiliza para ciertas operaciones), se debe ejecutar el request a <localhost:3000/auth/login> con el method 'POST'
